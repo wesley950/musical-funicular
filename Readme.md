@@ -7,9 +7,8 @@ The dumbest name ever. This project means to build an open source application en
 
 ## Planned Features
 
-- [ ] Platform wrapper (window, input, etc.)
+- [X] Platform wrapper (window and input)
 - [ ] Sprite batch renderer
-- [ ] Entity component system
 - [ ] Audio system
 
 

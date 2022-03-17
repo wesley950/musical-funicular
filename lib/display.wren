@@ -4,5 +4,6 @@ class Display {
     foreign static create()
     foreign static isCloseRequested()
     foreign static update()
+    foreign static close()
     foreign static destroy()
 }

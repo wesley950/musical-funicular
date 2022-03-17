@@ -1,4 +1,5 @@
 #include "glfw_platform.hpp"
+#include "glfw_callbacks.hpp"
 
 void GLFWPlatform::set_title(const std::string &new_title)
 {
@@ -30,6 +31,8 @@ void GLFWPlatform::create()
         m_Window = glfwCreateWindow(m_Width, m_Height, m_Title.c_str(), nullptr, nullptr);
         glfwMakeContextCurrent(m_Window);
         glfwSwapInterval(1);
+
+        glfwSetKeyCallback(m_Window, key_callback);
     }
 }
 
@@ -60,7 +63,15 @@ void GLFWPlatform::destroy()
     }
 }
 
-Platform* Platform::create_instance()
+void GLFWPlatform::close()
+{
+    if (m_Window)
+    {
+        glfwSetWindowShouldClose(m_Window, GLFW_TRUE);
+    }
+}
+
+Platform *Platform::create_instance()
 {
     s_Instance = new GLFWPlatform();
     return s_Instance;

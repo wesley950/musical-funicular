@@ -17,6 +17,7 @@ public:
     void create() override;
     bool is_close_requested() override;
     void update() override;
+    void close() override;
     void destroy() override;
 
 private:

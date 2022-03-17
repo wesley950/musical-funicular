@@ -1,4 +1,5 @@
 #include "application.hpp"
+#include "input.hpp"
 
 #include <iostream>
 #include <string>
@@ -16,6 +17,7 @@ void Application::init()
     // Create and initialize internal resources
     {
         s_Platform = Platform::create_instance();
+        Input::init();
     }
 
     // Initialize Wren
@@ -59,7 +61,7 @@ void Application::shutdown()
 
 WrenForeignMethodFn Application::bind_foreign_method(WrenVM *vm, const char *module, const char *class_name, bool is_static, const char *signature)
 {
-    if (!strcmp(module, "lib/display"))
+    if (!strcmp(module, "lib/display") || !strcmp(module, "lib/input"))
     {
         return Platform::bind_platform_methods(vm, module, class_name, is_static, signature);
     }
@@ -78,7 +80,7 @@ WrenLoadModuleResult Application::load_module(WrenVM *vm, const char *name)
         std::ifstream module_file(module_full_path);
         if (!module_file.is_open())
             return result; // Return null signaling the file could not be opened or found.
-        
+
         std::string line;
         std::stringstream buffer;
         while (std::getline(module_file, line))
@@ -87,7 +89,7 @@ WrenLoadModuleResult Application::load_module(WrenVM *vm, const char *name)
         }
         module_file.close();
 
-        char* raw_buffer = (char*)malloc(sizeof(char) * buffer.str().length() + 1);
+        char *raw_buffer = (char *)malloc(sizeof(char) * buffer.str().length() + 1);
         std::strcpy(raw_buffer, buffer.str().c_str());
         raw_buffer[buffer.str().length()] = 0;
 
@@ -127,7 +129,7 @@ void Application::write(WrenVM *vm, const char *text)
     std::cout << text;
 }
 
-void Application::free_module_raw_buffer(WrenVM* vm, const char *name, struct WrenLoadModuleResult result)
+void Application::free_module_raw_buffer(WrenVM *vm, const char *name, struct WrenLoadModuleResult result)
 {
-    free((void*) result.source);
+    free((void *)result.source);
 }
