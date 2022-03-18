@@ -12,15 +12,6 @@ The dumbest name ever. This project means to build an open source application en
 - [ ] Audio system
 
 
-## How to use it
-
-By default the program loads a file located at `data/application.wren` relative to the current working directory. You can also pass the arguments `--path or -p [path to application file]` to the program to change the entry point.
-
-This file must contain a static method named `run` that will be called by the host application after all the initialization is done.
-
-You can look into the folder `tests` to see a bunch of tests and use them as examples of what you can do.
-
-
 ## How to build
 
 Simply clone the repository recursively. All the needed libraries are included as submodules. You will then need a C++17 compatible compiler and at least CMake 3.16 according to the CMakeLists.txt, but virtually any version could generate build files.

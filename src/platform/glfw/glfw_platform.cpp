@@ -1,6 +1,8 @@
 #include "glfw_platform.hpp"
 #include "glfw_callbacks.hpp"
 
+#include <glad/glad.h>
+
 void GLFWPlatform::set_title(const std::string &new_title)
 {
     m_Title = new_title;
@@ -30,9 +32,14 @@ void GLFWPlatform::create()
         glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
         m_Window = glfwCreateWindow(m_Width, m_Height, m_Title.c_str(), nullptr, nullptr);
         glfwMakeContextCurrent(m_Window);
-        glfwSwapInterval(1);
+        glfwSwapInterval(0);
 
         glfwSetKeyCallback(m_Window, key_callback);
+        glfwSetFramebufferSizeCallback(m_Window, framebuffer_size_callback);
+
+        gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
+        
+        glfwSetTime(0.0);
     }
 }
 
@@ -69,6 +76,14 @@ void GLFWPlatform::close()
     {
         glfwSetWindowShouldClose(m_Window, GLFW_TRUE);
     }
+}
+
+double GLFWPlatform::get_time()
+{
+    // Note to future: apparently glfwSwapBuffers makes "System.clock" on Wren's
+    // side return "strange" values. For some reason implementing a foreign time 
+    // function does seem to solve the problem and I'm too lazy to use Xorg so...
+    return glfwGetTime();
 }
 
 Platform *Platform::create_instance()

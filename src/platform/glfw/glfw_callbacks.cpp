@@ -1,6 +1,8 @@
 #include "glfw_callbacks.hpp"
 #include "core/input.hpp"
 
+#include <glad/glad.h>
+
 static int32_t glfw_to_internal_key_code(int32_t key_code)
 {
     switch (key_code)
@@ -116,4 +118,10 @@ void key_callback(GLFWwindow *, int key_code, int scan_code, int action, int mod
         Input::set_key_pressed(key_code, true);
     else if (action == GLFW_RELEASE)
         Input::set_key_pressed(key_code, false);
+}
+
+
+void framebuffer_size_callback(GLFWwindow*, int width, int height)
+{
+    glViewport(0, 0, width, height);
 }

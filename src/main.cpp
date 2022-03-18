@@ -1,5 +1,7 @@
 #include "core/application.hpp"
 
+#include <ctime>
+
 int main(int argc, char *argv[])
 {
   Application::init();

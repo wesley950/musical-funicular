@@ -4,6 +4,7 @@
 
 #include <string>
 
+#define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
 
 class GLFWPlatform : public Platform
@@ -19,6 +20,8 @@ public:
     void update() override;
     void close() override;
     void destroy() override;
+
+    double get_time() override;
 
 private:
     GLFWwindow* m_Window = nullptr;

@@ -17,6 +17,14 @@ target_include_directories(wren_lib PUBLIC
                                 "thirdparty/wren/src/optional")
 
 
+project(glad_lib)
+file(GLOB GLAD_SOURCE 
+            "thirdparty/glad/*.h"
+            "thirdparty/glad/*.c")
+add_library(glad_lib ${GLAD_SOURCE})
+target_include_directories(glad_lib PUBLIC "thirdparty/glad")
+
+
 project(musical_funicular)
 file(GLOB CORE_SOURCE "src/core/*.hpp" "src/core/*.cpp")
 file(GLOB PLATFORM_GLFW_SOURCE "src/platform/glfw/*.hpp" "src/platform/glfw/*.cpp")
@@ -31,11 +39,13 @@ target_include_directories(musical_funicular PUBLIC
 
                             ${PROJECT_SOURCE_DIR}/src
 
+                            "thirdparty"
+
                             "thirdparty/wren/src/vm"
                             "thirdparty/wren/src/include"
                             "thirdparty/wren/src/optional"
                             )
-target_link_libraries(musical_funicular wren_lib)
+target_link_libraries(musical_funicular wren_lib glad_lib)
                                 
                                 
 set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)

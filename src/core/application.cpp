@@ -61,7 +61,7 @@ void Application::shutdown()
 
 WrenForeignMethodFn Application::bind_foreign_method(WrenVM *vm, const char *module, const char *class_name, bool is_static, const char *signature)
 {
-    if (!strcmp(module, "lib/display") || !strcmp(module, "lib/input"))
+    if (!strcmp(module, "lib/display") || !strcmp(module, "lib/input") || !strcmp(module, "lib/platform"))
     {
         return Platform::bind_platform_methods(vm, module, class_name, is_static, signature);
     }

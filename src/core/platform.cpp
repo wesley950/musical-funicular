@@ -110,6 +110,14 @@ void Platform::input_get_key_code(WrenVM *vm)
     }
 }
 
+void Platform::platform_time(WrenVM *vm)
+{
+    if (s_Instance)
+    {
+        wrenSetSlotDouble(vm, 0, s_Instance->get_time());
+    }
+}
+
 WrenForeignMethodFn Platform::bind_platform_methods(WrenVM *vm, const char *module, const char *class_name, bool is_static, const char *signature)
 {
     if (!strcmp(class_name, "Display") && is_static)
@@ -141,6 +149,11 @@ WrenForeignMethodFn Platform::bind_platform_methods(WrenVM *vm, const char *modu
             return &input_is_action_just_pressed;
         if (!strcmp(signature, "get_key_code(_)"))
             return &input_get_key_code;
+    }
+    else if (!strcmp(class_name, "Platform") && is_static)
+    {
+        if (!strcmp(signature, "time()"))
+            return &platform_time;
     }
 
     return NULL;
